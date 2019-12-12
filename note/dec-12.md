@@ -126,8 +126,26 @@ Finally  附上一个关于 JS 堆栈队列的文章：[链接](https://juejin.i
     Number(null);  // 0
     Number("abc"); // NaN 
     ```
-    (例子部分取自：[JS最新基本数据类型:BigInt](https://segmentfault.com/a/1190000019912017?utm_source=tag-newest)）  
+
+(例子部分取自：[JS最新基本数据类型:BigInt](https://segmentfault.com/a/1190000019912017?utm_source=tag-newest)）  
     有些作者不合理的例子已经修正～
 
 
 #### 3. 关于 `~~` 运算符
+这个运算符就是将变量转换成 Number 类型：
+
+- 数字类型字符串转化成纯数字： 
+  ```
+  var a = "123";
+  ~~a; // 123
+  ```
+- 非数字类型字符串转化成0：
+  ```
+  var a = "123asd!";
+  ~~a; // 0
+  ```
+- boolean类型转化成 1/0：
+  ```
+  ~~(1 > 2);    // 0
+  ~~(10 == 10); // 1
+  ```
