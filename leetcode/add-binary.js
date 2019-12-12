@@ -4,7 +4,6 @@ The input strings are both non-empty and contains only characters 1 or 0. */
 var a = "1010";
 var b = "1011";
 
-
 //简单粗暴的方法：
 var addBinary = function(a, b) {
   var res = parseInt(a, 2) + parseInt(b, 2);
