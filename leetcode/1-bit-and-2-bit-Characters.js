@@ -6,16 +6,40 @@ Now given a string represented by several bits.
 Return whether the last character must be a one-bit character or not.
 The given string will always end with a zero. */
 
-var bits = [1, 1, 0];
+var bits = [0, 1, 1, 0, 0];
 
 var isOneBitCharacter = function (bits) {
-  
+  var len = bits.length;
+  var last;
+  for(var i = 0; i < len;) {
+    if (bits[i] === 0) {
+      last = i;
+      i++;
+    } else {
+      i += 2;
+    }
+  }
+  return last === len - 1;
 };
 
-var foo = 1;
-function foo() {}
-// 其实这个函数可以等价于：
-// var foo = function () {};
-// 所以说它并不会重新申请一块空间，而是会忽略掉这个 foo 的新的一个初始化  
-// 给 foo 赋不同的值而已。解析的时候是 undefined 和 匿名函数且后者优先
-// 后来是运行到 foo = 1，所以就直接把 foo 的内容给改了
+/* 第一种方法是用标记法：
+   碰见 1 的时候就跳过下一个元素，因为一定会构成 2-bit
+   其次就是遇见 0 记录下来它的位置，不停地更新最后一个 0 的位置即可，最后与数组长度比较 */
+
+
+var isOneBitCharacter = function (bits) {
+  var reg = /^(10|11|0)*0$/;
+  console.log(reg.test(bits.join("")));
+}
+
+
+var isOneBitCharacter = function(bits) {
+  let numberOfOnes = 0;
+  for(let i = bits.length - 2; i >= 0; i--){
+      if(bits[i] === 1) numberOfOnes++;
+      else break;
+  }
+   return numberOfOnes % 2 === 0; 
+  };
+
+  isOneBitCharacter(bits);
