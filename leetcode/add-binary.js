@@ -51,7 +51,7 @@ const addBinary = (a, b) => {
 }
 
 
-//最后一个方法是直接用字符串去进行异或操作，不会转换成数字类型的
+//最后一个方法是直接用字符串去进行异或操作，不会转换成数据类型的
 var addBinary = function(a, b) {
   let [lenA, lenB] = [a.length, b.length];
   let res = '';
@@ -75,3 +75,4 @@ var addBinary = function(a, b) {
   }
   return res;
 };
+
