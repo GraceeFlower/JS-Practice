@@ -22,25 +22,26 @@
   1. `innerHTML`
   它是以 **html 格式**获取或者是修改节点内容的，例如：
       ```
-      // html
-      <div id="btn">This block should contain a button</div>
+      /* html */
+      <div class="box" id="btn">This block should contain a button</div>
 
-      // js
+      /* js */
       document.getElementById("btn").innerHTML = "<input type='button' value='button' />";
 
-      document.getElementById("btn").innerHTML
-      // "<input type='button' value='button' />";
+      document.getElementById("btn").innerHTML;
+      // "<input type='button' value='button' />"
       ```
       这个操作可以让 id 为 btn 的节点的内容变成一个按钮，而不是一段文字，并且通过这方式获取到的节点内容也是我们所添加到的整段 html。
 
   2. `innerText`  
   获取或设置**文本**内容，例如：
       ```
-      // html
+      /* html */
       <div class="box" id="text">outer<span> inner</span></div>
 
-      //js
-      document.getElementById("text").innerText; // "outer inner" 注意哦～空格也是文本的一部分呢
+      /* js */
+      document.getElementById("text").innerText;
+      // "outer inner" 注意哦～空格也是文本的一部分呢
 
       document.getElementById("text").innerText = "<span>new text</span>";
 
@@ -60,23 +61,29 @@
 
       以上面最后一个 🌰 来说：
       ```
-      document.nodeName; // "#document"
-      document.head.nodeName; // "HEAD"
-      document.getElementById("text").nodeName; // "DIV"
-      document.getElementsByTagName("div")[0].children[0].nodeName; // "INPUT"
+      document.nodeName;
+      // "#document"
+      document.head.nodeName;
+      // "HEAD"
+      document.getElementById("text").nodeName;
+      // "DIV"
+      document.getElementsByTagName("div")[0].children[0].nodeName;
+      // "INPUT"
       ```
       这个时候我给 js 中加上一句：
       ```
       document.getElementById("btn").children[0].setAttribute("type", "text");
 
-      document.getElementById("btn").children[0].attributes.type.nodeName; // "type"
+      document.getElementById("btn").children[0].attributes.type.nodeName;
+      // "type"
       ```
       它会把原来的 button 类型转换为 text，并且可以获得它的属性节点的名称 "type"。
 
       还有另一种属性的写法：
       ```
       document.getElementById("text").style.color = "#ddd";
-      document.getElementById("text").attributes.style.nodeName; // "style"
+      document.getElementById("text").attributes.style.nodeName;
+      // "style"
       ```
       文本节点也是一样的～创建再获取就好啦
 
@@ -106,10 +113,46 @@
         |文本节点(Text)|1|
         是的，例子又来了(还是基于最初的 html)：
         ```
-        document.getElementsByTagName("div")[1].nodeType; // 1
-        document.getElementsByTagName("div")[1].attributes[0].nodeType; // 2
-        document.getElementsByTagName("div")[1].childNodes[0].nodeType; // 3
+        document.getElementsByTagName("div")[1].nodeType;
+        // 1
+        document.getElementsByTagName("div")[1].attributes[0].nodeType;
+        // 2
+        document.getElementsByTagName("div")[1].childNodes[0].nodeType;
+        // 3
         ```
         (其实还有更多的类型，例如注释是 8 ...)
 
-    
+- 获取 HTML 元素节点的方法
+  1. `.getElementById(id)`  
+  获取指定 id 的元素，例如：
+      ```
+      document.getElementById("btn"); 
+      // "<div id="btn">...</div>"
+      ```
+      (如果没有找到返回 `null`)  
+
+  2. `.getElementsByClassName(className)`  
+  获取一个包含指定 `class` 名称的元素**数组**。
+      ```
+      document.getElementsByClassName("box"); 
+      // HTMLCollection(2) [div#btn.box, div#text.box, btn: div#btn.box, text: div#text.box]
+      ```
+      这个时候你在用数组的 index 就可以取到相应的那一个元素了～
+
+  3. `.getElementsByTagName(elementName)`  
+  获取一个包含指定标签名的元素**数组**。
+      ```
+      document.getElementsByTagName("div");
+      // HTMLCollection(2) [div#btn.box, div#text.box, btn: div#btn.box, text: div#text.box]
+
+      document.getElementsByTagName("input")[0];
+      // <input type=​"text" value=​"button">​
+      ```
+
+  4. `.getElementsByName(name)`  
+  获取一个包含指定 `name` 名称的的元素**数组**。  
+  比如 `form` 表单中的各种带有 `name` 属性的元素，这里就举一个 `null` 的例子：
+      ```
+      document.getElementsByName("btn"); // []
+      ```
+      啊哦～不是 `null` 哦，是空数组～只有第一个没找到才是 `null` 
