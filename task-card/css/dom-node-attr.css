@@ -1,0 +1,11 @@
+body {
+  width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.btn {
+  width: 200px;
+  height: 100px;
+  background-color: rgb(155, 144, 194);
+}
