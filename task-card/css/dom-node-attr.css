@@ -4,8 +4,10 @@ body {
   padding: 0;
 }
 
-.btn {
+.box {
   width: 200px;
   height: 100px;
   background-color: rgb(155, 144, 194);
+  color: #fff;
+  margin-bottom: 10px;
 }
