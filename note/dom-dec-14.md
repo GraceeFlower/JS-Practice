@@ -44,8 +44,6 @@
       // "outer inner" 注意哦～空格也是文本的一部分呢
 
       document.getElementById("text").innerText = "<span>new text</span>";
-
-
       ```
       最后这一步操作完，会看见这块区域中的内容变成了 `<span>new text</span>` 而不是 “new text”，它会完完全全按照你所修改的内容显示，包括空格。获取的时候却只有文本部分会被得到。
 
