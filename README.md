@@ -7,5 +7,9 @@ The algorithm practices are from:
 - Written Examination
 ...  
 
-Cause I am a new hand, hope you can give me lots of criticisms.  
-Thanks!
+Also, the code sometimes is related by its HTML & CSS.  
+I add the folders about them and you can download to make some attempts by yourself~  
+
+Cause I am a **new hand**, hope you can give me lots of criticisms.  
+
+##### Thanks!
