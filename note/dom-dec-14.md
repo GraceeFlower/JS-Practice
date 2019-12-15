@@ -236,8 +236,49 @@
     |node.removeChild(需要移除的节点)|删除节点
     |node.cloneNode(true / false)|克隆调用该方法的节点，一般参数选择true（深克隆）
 
-    那我们又来改改之前的页面：
-    
+    那我们这次用一个新的 🌰 ～
+    ```
+    /* html */
+    <div id="para"></div>
+    <ul class="fruit-list">
+    <li>apple</li>
+    <li>banana</li>
+    <li>orange</li>
+    <li>watermelon</li>
+    </ul>
+    <ul class="fruit-list"><li>mango</li><li>grape</li><li>lemon</li><li>coconut</li></ul>
+    ```
+    就是这么个简单的列表，接下来是 js 咯～
+    ```
+    /* js */
+    var pNode = document.createElement('p');
+    var text = document.createTextNode('Hello parameter!');
+    pNode.appendChild(text);
+    var para = document.getElementById('para');
+    para.appendChild(pNode);
+
+    var list = document.getElementsByClassName('fruit-list');
+    list[0].children[3].innerHTML = 'mango';
+    //childNodes 会包含所有的节点包括文本和子元素 例如：list[0].childNodes = [li, test, li ,test...]
+    list[1].removeChild(list[1].children[1]);
+    var listItem = document.createTextNode("pear");
+    var item = document.getElementsByTagName('ul');
+    // item[1].replaceChild(listItem, item[1].childNodes[0]);
+    // 只加文本节点的话，会删除之前元素的属性，比如 li 前面的黑点
+    var oList = document.createElement('li');
+    oList.appendChild(listItem);
+    item[0].childNodes[3].innerHTML = 'pineapple';
+    item[1].replaceChild(oList, item[1].childNodes[2]);
+    item[1].childNodes[2].style.color = '#ddd';
+    //如果先创建 element 再往 element 里加文本节点 就可以保留 li 的属性
+    //添加属性能用 setAttribute() 方法 / document.getElementById('id').style.color = '#fff'。
+    var childList = item[0].childNodes[3];
+    childList.parentElement.replaceChild(oList, childList);
+    //必须要节点的父元素，比如 item[1] 如果只有子节点，就要加 parentNode/parentElement，
+    //唯一的区别就是，前者找的是父节点，后者找的是父元素，如果一直往上找，
+    //前者可以多遍历到一个节点 body < html < #document < null，后者只能是 body < html < null。
+    ```
+    这个是我之前自己写的一小段 demo，有些混乱但是尽力在尝试了，希望能对您有些帮助，欢迎纠错！
 
     表格部分来自[这里](https://www.jianshu.com/p/fa56da886218)，感谢这个小可爱的总结～
 
