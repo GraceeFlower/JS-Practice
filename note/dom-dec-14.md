@@ -165,3 +165,79 @@
         document.querySelectorAll("div");
         // NodeList(2) [div#btn.box, div#text.box]
         ```
+
+- 访问节点的属性
+
+    |方法|描述|
+    |:---|:---|
+    |getAttribute(属性名)|获取Attribute
+    |removeAttribute(属性名)|删除Attribute
+    |setAttribute(属性名, 新值)|设置Attribute
+    |hasAttribute(属性名)|返回布尔值，判断Attribute是否存在
+    这个可以对节点属性做一些操作，之前其实有举例说到 `setAttribute()`，其他的其实都差不多，就不再多演示。
+
+- 获取关系节点
+
+    |属性|描述|
+    |:---|:---|
+    |node.parentNode|获取父节点
+    |node.childNodes|获取子节点集合
+    |node.firstChild|获取第一个子节点
+    |node.lastChild|获取最后一个子节点
+    |node.previousSibling|获取前一个兄弟节点
+    |node.nextSibling|获取后一个兄弟节点
+    这个也是一些访问性的属性，例如：
+    ```
+    document.getElementById("btn").parentNode;
+    // <body>...</body>
+
+    document.getElementsByTagName("div")[1].lastChild;
+    // "<span>new text</span>"
+
+    document.getElementById("btn").nextSibling;
+    // #text
+
+    document.getElementById("btn").nextElementSibling;
+    // <div class=​"box" id=​"text">...​</div>​
+
+    document.getElementsByTagName("body")[0].firstChild;
+    // #text
+
+    document.getElementsByTagName("body")[0].firstElementChild;
+    // <div class=​"box" id=​"btn">...​</div>​
+    ```
+    我们可以看见，如果只是用 `childNodes` 这种属性，会取到空白的文本节点，而用 `firstElementChild` 这类可以取到元素类型子节点，这就分为两种了：
+    
+    - 第一种叫节点树🌲  
+    父子关系: parentNode, childNode, firstChild, lastChild;  
+    兄弟关系: previousSibling, nextSibling;  
+    - 另一种叫元素树🌲  
+    父子关系:parentElement, children, firstElementChild, lastElementChild;  
+    兄弟关系: previousElementSibling, nextElementSibling
+    它们的规则和用法都是相同的。
+
+- 创建新节点  
+
+    |方法|描述|
+    |:---|:---|
+    |document.createElement()|创建某种类型的元素
+    |document.createDocumentFragment()|创建一个新的空白的文档片段
+    |document.createTextNode(data)|创建文本节点
+
+- 节点插入、替换、删除、克隆
+    注意：新创建的节点需要插入文档树才会生效
+
+    |方法|描述|
+    |:---|:---|
+    |node.append()|追加子节点，IE不支持
+    |node.appendChild()|追加子节点
+    |node.insertBefore(新节点，参照节点)|在参照物前插入节点
+    |node.replaceChild(新节点，被替换节点)|替换节点
+    |node.removeChild(需要移除的节点)|删除节点
+    |node.cloneNode(true / false)|克隆调用该方法的节点，一般参数选择true（深克隆）
+
+    那我们又来改改之前的页面：
+    
+
+    表格部分来自[这里](https://www.jianshu.com/p/fa56da886218)，感谢这个小可爱的总结～
+
