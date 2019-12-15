@@ -154,3 +154,14 @@
       document.getElementsByName("btn"); // []
       ```
       啊哦～不是 `null` 哦，是空数组～只有第一个没找到才是 `null` 
+
+  5. `.querySelector()` & `.querySelectAll()`
+  获取匹配指定 **CSS 选择器**元素的（第一个）子元素。  
+  这个方法 IE 8+ 才支持，括号里可以是各种 css选择器，例如：
+        ```
+        document.querySelector("div#btn"); 
+        // <div class=​"box" id=​"btn">...</div>​
+
+        document.querySelectorAll("div");
+        // NodeList(2) [div#btn.box, div#text.box]
+        ```
