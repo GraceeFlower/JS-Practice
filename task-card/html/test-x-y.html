@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XY</title>
+
+  <style>
+    body {
+      background-color: bisque;
+      width: 1000px;
+      height: 1600px;
+    }
+
+    #up-box {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: #ddd;
+    }
+
+    #down-box {
+      position: absolute;
+      bottom: 0;
+      width: 100px;
+      height: 100px;
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="up-box"></div>
+  <div id="down-box"></div>
+  <script>
+    // var oBox = document.getElementsByTagName("body")[0];
+    var oUpBox = document.getElementById("up-box");
+    var oDownBox = document.getElementById("down-box");
+    window.onload = function(){
+      oUpBox.onmousedown = function(ev){
+        ev = ev || window.event;
+
+        console.log(ev.offsetX, ev.offsetY);
+        console.log(ev.clientX, ev.clientY);
+        console.log(ev.pageX, ev.pageY);
+        console.log(ev.screenX, ev.screenY);
+        console.log(ev.layerX, ev.layerY);
+        console.log(ev.x, ev.y);
+        console.log("---------");
+      }
+      oDownBox.onmousedown = function(ev){
+        ev = ev || window.event;
+        
+        console.log(ev.offsetX, ev.offsetY);
+        console.log(ev.clientX, ev.clientY);
+        console.log(ev.pageX, ev.pageY);
+        console.log(ev.screenX, ev.screenY);
+        console.log(ev.layerX, ev.layerY);
+        console.log(ev.x, ev.y);
+        console.log("---------");
+      }
+    }
+  </script>
+</body>
+</html>

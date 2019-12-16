@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+</head>
+<body>
+	<ul id="color-list">
+		<li>red</li>
+		<li>orange</li>
+		<li>yellow</li>
+		<li>green</li>
+		<li>blue</li>
+		<li>indigo</li>
+		<li>purple</li>
+	</ul>
+	<script>
+	(function(){
+	    var colorList=document.getElementById("color-list");
+	    colorList.addEventListener('click',showColor,false);
+	    function showColor (e) {
+	        e=e||window.event;
+	        var targetElement=e.target||e.srcElement;
+	        if(targetElement.nodeName.toLowerCase()==="li"){
+	        alert(targetElement.innerHTML);
+	        }
+	    }
+	})();
+	</script>
+ 
+</body>
+</html>
