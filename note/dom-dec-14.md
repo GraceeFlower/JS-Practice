@@ -103,12 +103,14 @@
 
     5. `nodeType`  
     返回节点类型，分类如下：
+    
         |节点类型|nodeType|
         |:---|:---|
         |文档节点(Document)|9|
         |元素节点(Element)|3|
         |属性节点(Attribute)|2|
         |文本节点(Text)|1|
+        
         是的，例子又来了(还是基于最初的 html)：
         ```
         document.getElementsByTagName("div")[1].nodeType;
@@ -187,6 +189,7 @@
     |node.lastChild|获取最后一个子节点
     |node.previousSibling|获取前一个兄弟节点
     |node.nextSibling|获取后一个兄弟节点
+    
     这个也是一些访问性的属性，例如：
     ```
     document.getElementById("btn").parentNode;
