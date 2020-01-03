@@ -103,12 +103,14 @@
 
     5. `nodeType`  
     返回节点类型，分类如下：
+    
         |节点类型|nodeType|
         |:---|:---|
         |文档节点(Document)|9|
         |元素节点(Element)|3|
         |属性节点(Attribute)|2|
         |文本节点(Text)|1|
+        
         是的，例子又来了(还是基于最初的 html)：
         ```
         document.getElementsByTagName("div")[1].nodeType;
@@ -174,6 +176,7 @@
     |removeAttribute(属性名)|删除Attribute
     |setAttribute(属性名, 新值)|设置Attribute
     |hasAttribute(属性名)|返回布尔值，判断Attribute是否存在
+    
     这个可以对节点属性做一些操作，之前其实有举例说到 `setAttribute()`，其他的其实都差不多，就不再多演示。
 
 - 获取关系节点
@@ -186,6 +189,7 @@
     |node.lastChild|获取最后一个子节点
     |node.previousSibling|获取前一个兄弟节点
     |node.nextSibling|获取后一个兄弟节点
+    
     这个也是一些访问性的属性，例如：
     ```
     document.getElementById("btn").parentNode;
