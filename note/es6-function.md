@@ -552,4 +552,213 @@
                     (x => f(v => x(x)(v)));
       ```
 
+6. 尾调用优化  
+    - 什么是尾调用（Tail Call）？  
+    就是指某个函数的最后一步是调用另一个函数，ok～看几个例子：
+    
+      ```
+      // 下面这个就是尾调用
+      function foo(x) {
+        return bar(x);
+      }
 
+      // 反面例子来咯
+      // 1.调用 bar 函数之后还有赋值操作
+      function foo(x) {
+        let y = bar(x);
+        return y;
+      }
+
+      // 2.调用 bar 函数之后还有运算操作或其他操作，写在一行也不行哦
+      function foo(x) {
+        return bar(x) + 1;
+      }
+
+      // 3.调用之后隐含其他操作
+      function foo(x) {
+        bar(x);
+      }
+
+      // 上面这个例子等价于
+      function foo(x) {
+        bar(x);
+        return undefined;
+      }
+      ```  
+      
+      但是呢，作者说，尾调用不一定是要在函数尾部，只要是在最后一步操作就 ok，怎么理解？
+
+      ```
+      function foo(x) {
+        if (x > 0) {
+          return bar(x);
+        }
+        return baz(x);
+      }
+      ```
+
+      很明显 bar 或者 baz 只会选择一个作为返回值，所以说这两个都是函数 foo 的最后一步操作，即尾调用。  
+
+    - 尾调用优化  
+    函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。如果在函数 A 的内部调用函数 B，那么在 A 的调用帧上方，还会形成一个 B 的调用帧。等到 B 运行结束，将结果返回到 A，B 的调用帧才会消失。如果函数 B 内部还调用函数 C，那就还有一个 C 的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。  
+    尾调用由于是函数的最后一步操作，所以**不需要保留外层函数的调用帧**，因为调用位置、内部变量等信息都不会再用到了，只要**直接用内层函数的调用帧，取代外层函数的调用帧**就可以了。  
+    看个例子：
+
+      ```
+      function foo() {
+        let x = 1;
+        let y = 2;
+        return bar(x + y);
+      }
+      foo();
+
+      // 等价于
+      function foo() {
+        return bar(3);
+      }
+      foo();
+
+      // 等价于
+      bar(3);
+      ```
+
+      “尾调用优化”（Tail call optimization），即只保留内层函数的调用帧。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用帧只有一项，这将大大节省内存。这就是“尾调用优化”的意义。  
+      注意，只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”。  
+      注意，目前只有 Safari 浏览器支持尾调用优化，Chrome 和 Firefox 都不支持。  
+
+    - 尾递归  
+    函数调用自身叫递归，尾函数调用自身就叫尾递归。  
+    递归非常耗费内存，因为需要同时保存成千上百个调用帧，很容易发生“栈溢出”错误（stack overflow）。但对于尾递归来说，由于只存在一个调用帧，所以永远不会发生“栈溢出”错误。天呐还有这等好事！？看下面这个例子！  
+
+      ```
+      function factorial(n) {
+        if (1 === n) return 1;
+        return n * factorial(n - 1);
+      }
+
+      factorial(5); // 120
+      ```
+
+      这是一个很常见的计算 n 的阶乘的递归题，如果用这种办法，计算 n 的阶乘，最多需要保存 n 个调用记录，复杂度是 O(n)。如果改成尾递归：
+
+      ```
+      function factorial(n, total) {
+        if (1 === n) return total;
+        return factorial(n - 1, n * total);
+      }
+
+      factorial(5, 1); // 120
+      ```
+
+      这个时候我们的复杂度就是 O(1)，因为只要保留一个调用记录就好了～
+      
+      >但是我是不是可以理解为，我把所有需要存在外部的调用记录通过一个变量存到函数内部就好了呢？
+
+      还有一个比较著名的例子，就是计算 Fibonacci 数列，也能充分说明尾递归优化的重要性。  
+
+      ```
+      // 非尾递归 Fibonacci 数列实现如下：
+      function Fibonacci(n) {
+        if ( n <= 1 ) {return 1};
+        return Fibonacci(n - 1) + Fibonacci(n - 2);
+      }
+
+      Fibonacci(10) // 89
+      Fibonacci(100) // 超时
+      Fibonacci(500) // 超时
+
+      // 尾递归写法：
+      function Fibonacci(n, former = 1, latter = 1) {
+        if (n <= 1) return latter;
+        return Fibonacci(n - 1, latter, former + latter);
+      }
+
+      Fibonacci(100) // 573147844013817200000
+      Fibonacci(1000) // 7.0330367711422765e+208
+      Fibonacci(10000) // Infinity
+      ```
+      
+      非常有意义啊～ES6 中只要使用尾递归，就不会发生栈溢出（或者层层递归造成的超时），相对节省内存。
+
+    - 递归函数的改写  
+    尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是**把所有用到的内部变量改写成函数的参数**(这就回答了我上面的疑问～果然是这样的)。  
+    比如上面的例子，阶乘函数 factorial 需要用到一个中间变量 total，那就把这个中间变量改写成函数的参数。这样做的缺点就是不太直观，第一眼很难看出来，为什么计算 5 的阶乘，需要传入两个参数 5 和 1 ？解决的办法有两个：
+
+      ```
+      // 1.在尾递归函数外面写另一个正常的函数
+      function tailFactorial(n, total) {
+        if (1 === n) return total;
+        return tailFactorial(n - 1, n * total);
+      }
+
+      function factorial(n) {
+        return tailFactorial(n, 1);
+      }
+
+      factorial(5) // 120
+
+      // currying
+      function currying(fn, n) {
+        return function (m) {
+          return fn.call(this, m, n);
+        };
+      }
+
+      function tailFactorial(n, total) {
+        if (1 === n) return total;
+        return tailFactorial(n - 1, n * total);
+      }
+
+      const factorial = currying(tailFactorial, 1);
+
+      factorial(5) // 120
+      ```
+
+      第一个不难理解，第二个就是通过柯里化，把最后要用的函数变成只接受一个参数的形式，这两个都是用一个参数的函数代替之前的函数。  
+      再来看看第二种办法：  
+
+      ```
+      // 函数默认值，来咯～
+      function factorial(n, total = 1) {
+        if (n === 1) return total;
+        return factorial(n - 1, n * total);
+      }
+
+      factorial(5) // 120
+      ```
+
+      其实和 Fibonacci 的例子一样，用到了函数默认值，非常方便。  
+      总结就是，如果需要递归，尽量用尾递归～  
+    
+    - 严格模式  
+    ES6 的尾调用优化只在严格模式下开启，正常模式是无效的。  
+    这是因为在正常模式下，函数内部有两个变量，可以跟踪函数的调用栈。
+
+      - func.arguments：返回调用时函数的参数。
+      - func.caller：返回调用当前函数的那个函数。
+
+      尾调用优化发生时，函数的调用栈会改写，因此上面两个变量就会失真。严格模式禁用这两个变量，所以尾调用模式仅在严格模式下生效。
+
+    - 尾递归优化的实现  
+    上面已经提到，尾递归优化只在严格模式下生效，那么正常模式下，或者那些不支持该功能的环境中，有没有办法也使用尾递归优化呢？回答是可以的，就是自己实现尾递归优化。  
+    减少调用栈就是解决办法，可以采用“循环”换掉“递归”。 
+    这个有复杂，感兴趣的小可爱自己研究研究吧～[链接](http://es6.ruanyifeng.com/#docs/function#%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0)奉上。  
+
+7. 函数参数的尾逗号（ES2017）  
+这个没什么特别的，就是可以在最后一个参数后面加逗号，这样可以在下次修改参数位置或者加一个参数的时候，修改信息不带上这一行。  
+
+8. `Function.prototype.toString()`（ES2019）  
+这个之前有提到过，就是会连带代码中注释之类的都返回，与原代码一模一样。  
+
+9. `catch` 命令的参数省略（ES2019）  
+这个呢就是规定可以省略 catch 后面必须带上抛出的错误，也就是参数 err ，只写成：
+  
+    ```
+    try {
+
+    } catch {
+
+    }
+    ```
+
+   即可～
