@@ -25,6 +25,7 @@ var addDigits = function(num) {
 
 // 也可以用 Number.toString() 来将数字转为字符串，但是如果要直接用数字的话记得做区分处理哦～
 // 例如：1..toString() / 1. toString() / (1).toString()
+// 还可以利用 +String 的方式转换成字符串呢～
 
 // 直接O(1)解决！前面的条件判断是为了防止 0 的错选 
 // return num <= 9 ? num : (num % 9 || 9);
