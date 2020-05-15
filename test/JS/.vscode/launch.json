@@ -8,10 +8,10 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
+      "program": "${workspaceFolder}/edward.js",
       "skipFiles": [
         "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/leetcode/1-bit-and-2-bit-Characters.js"
+      ]
     }
   ]
 }

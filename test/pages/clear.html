@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .first {
+      background-color: aqua;
+      width: 20%;
+      float: left;
+    }
+    .second {
+      background-color: blue;
+      width: 20%;
+      float: right;
+    }
+    .third {
+      background-color: blueviolet;
+      clear: both;
+    }
+    p {
+      width: 50%;
+    }
+
+    .parent {
+      position: relative;
+      /* text-align: center; */
+    } 
+
+    /* .child {
+      position: absolute;
+      color: #000;
+      width: 100px;
+      height: 100px;
+      background-color: aqua;
+      margin: 0 auto;
+      
+    } */
+
+    .child {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* display: inline-block;  */
+      /* text-align: center; */
+      background-color: aqua;
+      color: #000;
+    }
+
+    /* .flex {
+      display: flex;
+      justify-content: space-between;
+    } */
+
+    .left {
+      /* flex: 0 0 200px; */
+      float: left;
+      width: 200px;
+      background: chartreuse;
+      color: #fff;
+    }
+
+    .center {
+      margin: 0 200px;
+      background: bisque;
+      color: #000;
+    }
+
+    .right {
+      /* flex: 1; */
+      float: right;
+      width: 200px;
+      background: chartreuse;
+      color: #fff;
+    }
+
+    .father::after{
+      content: "";
+      display: block;
+      /* height: 0; */
+      clear: both;
+      /* visibility: hidden; */
+    }
+
+    .d-father::after, .d-father::before {
+      content: "";
+      display: table;
+    }
+
+    .d-father::after {
+      clear: both;
+    }
+
+    .fix {
+      background-color: #000;
+      position: fixed;
+      width: 100%;
+      top: 0;
+    }
+
+    .clearfix:after {
+      content: "";
+      display: block;
+      height: 0;
+      visibility: hidden;
+      clear: both;
+    }
+
+    .content {
+      background-color: blue;
+      height: 300px;
+      width: 100%;
+    }
+
+    .rela {
+      position: relative;
+      background-color: cornflowerblue;
+      width: 50%;
+      height: 200px;
+    }
+
+
+    .detail-bkg {
+      position: absolute;
+      width: calc(100%);
+      background-color: cornsilk;
+    }
+  </style>
+</head>
+<body>
+  <div class="clearfix">
+    <div class="fix">
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+        veritatis et quasi architecto beatae vitae dicta sunt explicabo.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+        veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+    </div>
+    </div>
+    <div class="content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+        veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+    </div>
+  <div>
+    <p class="first">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+      veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    <p class="second">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+      veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    <p class="third">This paragraph uses clear.</p>
+  </div>
+
+  <div class="flex">
+    <div class="d-father">
+      <div class="left">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+        veritatis et quasi architecto beatae vitae dicta sunt explicabo.</div>
+      <div class="right">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+        veritatis et quasi architecto beatae vitae dicta sunt explicabo.</div>
+    </div>
+      <div class="center">Sed ut .</div>
+  </div>
+  <div class="father">
+    <div class="left">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+      veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+    </div>   
+    <div class="right">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+      veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+    </div>
+  </div>
+  <div class="center">Sed ut .</div>
+  <div class="rela">
+      <div class="detail-bkg">This paragraph uses clear.</div>
+  </div>
+  
+</body>
+</html>

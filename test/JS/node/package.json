@@ -1,0 +1,17 @@
+{
+  "name": "node-practice",
+  "version": "1.0.0",
+  "description": "some practices about node",
+  "main": "index.js",
+  "scripts": {
+    "test": "node"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Gracee",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/leetcode/1-bit-and-2-bit-Characters.js"
+      "program": "${file}"
     }
   ]
 }
